@@ -1,6 +1,6 @@
 {
   "name": "react-use-timer-hook",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A React hook for managing countdown or count-up timers with pause, reset, and customizable callbacks.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
