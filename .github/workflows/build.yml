@@ -4,8 +4,13 @@ on:
   workflow_call:
 
 jobs:
+  prepublish:
+    uses: ./.github/workflows/prepublish.yml
+
   build:
     name: 'Build application'
+    needs:
+      - prepublish
     runs-on: ubuntu-latest
     strategy:
       matrix:
