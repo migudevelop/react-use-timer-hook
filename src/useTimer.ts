@@ -15,6 +15,7 @@ export function useTimer({
   onTick,
   onReset
 }: UseTimerOptions = {}) {
+  const finishTime = countUp ? initialTime : 0
   const {
     isRunning,
     isPaused,
@@ -29,7 +30,7 @@ export function useTimer({
     tick
   } = useTimerReducer({
     time: countUp ? 0 : initialTime,
-    finishTime: countUp ? initialTime : 0,
+    finishTime,
     autoStart,
     countUp
   })
@@ -82,10 +83,10 @@ export function useTimer({
 
   // Expire callback
   useEffect(() => {
-    if (!countUp && time === 0) {
+    if (time === finishTime && !isRunning) {
       onFinish?.()
     }
-  }, [time, countUp, onFinish])
+  }, [time, onFinish, finishTime, isRunning])
 
   return {
     ...getTimeFromSeconds(time),

@@ -19,7 +19,7 @@ The timer uses a reducer pattern with specific action types defined in `src/cons
 
 ```typescript
 // Always use these constants for actions, never hardcode strings
-START, PAUSE, TICK, PAUSE_TICK, RESET, SET_TIME;
+;(START, PAUSE, TICK, PAUSE_TICK, RESET, SET_TIME)
 ```
 
 ### Dual Timer Modes
@@ -84,11 +84,14 @@ onReset?: () => void;   // Called when timer resets
 
 ### Import Patterns
 
+- Always destructure imports instead of namespace imports e.g:
+  import { convertSecondsToMilliseconds, getTimeFromSeconds, getTimeFromMilliseconds } from './helpers'
+
 ```typescript
 // Always import from specific modules
-import { isNull } from "@migudevelop/types-utils";
-import dayjs from "dayjs";
-import duration from "dayjs/plugin/duration";
+import { isNull } from '@migudevelop/types-utils'
+import dayjs from 'dayjs'
+import duration from 'dayjs/plugin/duration'
 ```
 
 ## Development Workflow
@@ -122,7 +125,7 @@ import duration from "dayjs/plugin/duration";
 Use the returned time breakdown object:
 
 ```typescript
-const { hours, minutes, seconds, totalSeconds } = useTimer(options);
+const { hours, minutes, seconds, totalSeconds } = useTimer(options)
 // Display as HH:MM:SS or use totalSeconds for progress bars
 ```
 

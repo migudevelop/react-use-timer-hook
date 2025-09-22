@@ -34,16 +34,18 @@ function timerReducer(state: typeof INITIAL_TIMER_STATE, action: TimerAction) {
     case TIMER_ACTIONS.TICK:
       if (!state.isRunning) return state
       if (state.countUp) {
-        if (state.time >= state.finishTime) {
-          return mergeState(state, {
-            isRunning: false,
-            time: state.finishTime
-          })
+        const time = state.time + 1
+        if (time < state.finishTime) {
+          return mergeState(state, { time: state.time + 1 })
         }
-        return mergeState(state, { time: state.time + 1 })
+        return mergeState(state, {
+          isRunning: false,
+          time: state.finishTime
+        })
       } else {
-        if (state.time > 0) {
-          return mergeState(state, { time: state.time - 1 })
+        const time = state.time - 1
+        if (time > 0) {
+          return mergeState(state, { time })
         }
         return mergeState(state, { isRunning: false, time: 0 })
       }

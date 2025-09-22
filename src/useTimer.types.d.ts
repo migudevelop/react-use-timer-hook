@@ -5,8 +5,6 @@ export interface UseTimerOptions {
   countUp?: boolean
   /** Autostart timer on mount */
   autoStart?: boolean
-  /** Interval in ms */
-  interval?: number
   /** Callback when timer ends (only for countdown) */
   onFinish?: () => void
   /** Callback on each tick when the timer is changing */

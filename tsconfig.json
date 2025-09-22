@@ -21,6 +21,9 @@
     "moduleDetection": "force",
     "erasableSyntaxOnly": true,
     "noUncheckedSideEffectImports": true,
+    "types": [
+      "vitest/globals",
+    ]
   },
   "include": [
     "src"
@@ -28,7 +31,5 @@
   "exclude": [
     "dist",
     "node_modules",
-    "**/*.test.ts",
-    "**/*.test.tsx"
   ]
 }

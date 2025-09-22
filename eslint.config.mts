@@ -1,4 +1,5 @@
 import js from '@eslint/js'
+import vitest from '@vitest/eslint-plugin'
 import { defineConfig } from 'eslint/config'
 import eslintConfigPrettier from 'eslint-config-prettier'
 import importPlugin from 'eslint-plugin-import'
@@ -15,7 +16,21 @@ export default defineConfig([
     files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     plugins: { js, import: importPlugin },
     extends: ['js/recommended', reactHooks.configs['recommended-latest']],
-    languageOptions: { globals: globals.browser }
+    languageOptions: {
+      globals: globals.browser
+    }
+  },
+  {
+    files: ['src/**/*.test.{ts,tsx,js,jsx}'],
+    extends: [vitest.configs.recommended],
+    languageOptions: {
+      globals: {
+        ...vitest.environments.env.globals
+      }
+    },
+    rules: {
+      ...vitest.configs.recommended.rules
+    }
   },
   {
     ignores: ['node_modules/*', 'dist/*'],
