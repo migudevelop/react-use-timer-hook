@@ -14,22 +14,27 @@ export type TimeFromMillisecondsType = {
 }
 
 /**
- * Convierte un valor en segundos a milisegundos.
- * @param seconds Segundos a convertir
- * @returns Milisegundos equivalentes
+ * Converts a value in seconds to milliseconds.
+ * @param seconds Seconds to convert
+ * @returns Equivalent milliseconds
  */
 export function convertSecondsToMilliseconds(seconds: number): number {
   return seconds * 1000
 }
 
+/**
+ * Returns a time breakdown object from a value in seconds.
+ * @param seconds Time in seconds
+ * @returns Object with time values
+ */
 export function getTimeFromSeconds(seconds: number): TimeFromMillisecondsType {
   return getTimeFromMilliseconds(convertSecondsToMilliseconds(seconds))
 }
 
 /**
- * Devuelve un objeto con la descomposición de un tiempo dado en segundos a milisegundos, segundos, minutos y horas.
- * @param seconds Tiempo en segundos
- * @returns Objeto con los distintos valores de tiempo
+ * Returns a breakdown object for a given time in milliseconds.
+ * @param milliseconds Time in milliseconds
+ * @returns Object with total and component time values
  */
 export function getTimeFromMilliseconds(
   milliseconds: number
@@ -46,6 +51,11 @@ export function getTimeFromMilliseconds(
   }
 }
 
+/**
+ * Calculates the total pause time in milliseconds, including the current pause session if active.
+ * @param params Object with pauseStart and totalPauseTime
+ * @returns Total pause time in milliseconds
+ */
 export function getTotalPauseMilliseconds({
   pauseStart,
   totalPauseTime

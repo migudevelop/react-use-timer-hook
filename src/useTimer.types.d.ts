@@ -11,8 +11,6 @@ export interface UseTimerOptions {
   onTick?: () => void
   /** Callback when the timer is reset */
   onReset?: () => void
-  /** Callback when the timer is paused */
-  onPause?: () => void
 }
 
 export interface UseTimerReducerOptions {

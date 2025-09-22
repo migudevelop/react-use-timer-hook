@@ -8,6 +8,12 @@ import type {
   UseTimerReducerOptions
 } from './useTimer.types'
 
+/**
+ * Merges the current timer state with a partial new state.
+ * @param state Current timer state
+ * @param newState Partial state to merge
+ * @returns New merged timer state
+ */
 function mergeState(
   state: TimerState = INITIAL_TIMER_STATE,
   newState: Partial<TimerState>
@@ -15,6 +21,12 @@ function mergeState(
   return { ...state, ...newState }
 }
 
+/**
+ * Reducer function for timer state transitions.
+ * @param state Current timer state
+ * @param action TimerAction to apply
+ * @returns New timer state
+ */
 function timerReducer(state: typeof INITIAL_TIMER_STATE, action: TimerAction) {
   switch (action.type) {
     case TIMER_ACTIONS.START:
@@ -67,6 +79,11 @@ function timerReducer(state: typeof INITIAL_TIMER_STATE, action: TimerAction) {
   }
 }
 
+/**
+ * Custom reducer hook for timer state and actions.
+ * @param options UseTimerReducerOptions configuration
+ * @returns Timer state and reducer action methods
+ */
 export function useTimerReducer({
   time = 0,
   finishTime = 0,
@@ -81,13 +98,13 @@ export function useTimerReducer({
     countUp
   })
 
-  // Start timer
+  /** Start the timer */
   const start = useCallback(() => dispatch({ type: TIMER_ACTIONS.START }), [])
 
-  // Pause timer
+  /** Pause the timer */
   const pause = useCallback(() => dispatch({ type: TIMER_ACTIONS.PAUSE }), [])
 
-  // Reset timer
+  /** Reset the timer to initial state */
   const reset = useCallback(
     () =>
       dispatch({
@@ -100,18 +117,18 @@ export function useTimerReducer({
     [time, autoStart, countUp, finishTime]
   )
 
-  // Set time
+  /** Set the timer to a specific value */
   const setTime = useCallback(
     (value: number) => dispatch({ type: TIMER_ACTIONS.SET_TIME, value }),
     []
   )
 
-  // Timer tick
+  /** Advance the timer by one tick */
   const tick = useCallback(() => {
     dispatch({ type: TIMER_ACTIONS.TICK })
   }, [])
 
-  // Pause tick
+  /** Advance the pause timer by one tick */
   const pauseTick = useCallback(() => {
     dispatch({ type: TIMER_ACTIONS.PAUSE_TICK })
   }, [])

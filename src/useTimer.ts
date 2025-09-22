@@ -7,6 +7,11 @@ import { useTimerReducer } from './useTimerReducer'
 
 const INTERVAL = 1000 // 1 second
 
+/**
+ * React hook for a flexible timer supporting countdown, count-up, pause, and granular time tracking.
+ * @param options UseTimerOptions configuration object
+ * @returns Timer state and control methods
+ */
 export function useTimer({
   time: initialTime = 0,
   countUp = false,
@@ -38,7 +43,9 @@ export function useTimer({
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const pauseIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
-  // Timer logic
+  /**
+   * Timer interval effect: handles ticking when running
+   */
   useEffect(() => {
     if (!isRunning) {
       if (intervalRef.current) clearInterval(intervalRef.current)
@@ -53,7 +60,9 @@ export function useTimer({
     }
   }, [isRunning, tick, onTick])
 
-  // Pause timer logic
+  /**
+   * Pause interval effect: tracks pause duration when paused
+   */
   useEffect(() => {
     if (isRunning || !isPaused) {
       if (pauseIntervalRef.current) clearInterval(pauseIntervalRef.current)
@@ -67,13 +76,17 @@ export function useTimer({
     }
   }, [isRunning, pauseTick, isPaused])
 
-  // Reset timer if initialTime changes
+  /**
+   * Reset effect: resets timer if initialTime changes
+   */
   useEffect(() => {
     reset()
     onReset?.()
   }, [reset, onReset])
 
-  // If timer is running and pauseStart is set, update totalPauseTime
+  /**
+   * Syncs pause state: if timer is running and pauseStart is set, update totalPauseTime
+   */
   useEffect(() => {
     if (isRunning && isNull(pauseStart)) {
       start()
@@ -81,7 +94,9 @@ export function useTimer({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isRunning])
 
-  // Expire callback
+  /**
+   * Expire callback: calls onFinish when timer completes
+   */
   useEffect(() => {
     if (time === finishTime && !isRunning) {
       onFinish?.()
