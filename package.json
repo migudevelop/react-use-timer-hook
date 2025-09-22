@@ -1,0 +1,90 @@
+{
+  "name": "react-use-timer-hook",
+  "version": "1.0.0",
+  "description": "A React hook for managing countdown or count-up timers with pause, reset, and customizable callbacks.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint ./src/**/*.{js,jsx,ts,tsx}",
+    "lint:fix": "eslint --fix ./src/**/*.{js,jsx,ts,tsx}",
+    "prettier:check": "prettier . --check",
+    "prettify": "prettier . --write",
+    "prepare": "husky install"
+  },
+  "engines": {
+    "node": ">= 18.0.x"
+  },
+  "files": [
+    "dist/**/*",
+    "LICENSE",
+    "README.MD",
+    "package.json"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0"
+  },
+  "dependencies": {
+    "@migudevelop/types-utils": "1.3.0",
+    "dayjs": "1.11.18"
+  },
+  "bugs": {
+    "url": "https://github.com/migudevelop/react-use-timer-hook/issues"
+  },
+  "homepage": "https://github.com/migudevelop/react-use-timer-hook#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/migudevelop/react-use-timer-hook.git"
+  },
+  "keywords": [
+    "react",
+    "react-hook",
+    "react-hooks",
+    "react-use-timer-hook",
+    "react-timer-hook",
+    "timer-hook",
+    "timer",
+    "countdown",
+    "time",
+    "clock",
+    "useTimer",
+    "useStopwatch",
+    "useTime",
+    "react-native",
+    "stopwatch",
+    "countdown",
+    "seconds",
+    "hook",
+    "use"
+  ],
+  "author": "Miguel Martínez",
+  "license": "ISC",
+  "devDependencies": {
+    "@commitlint/cli": "19.8.1",
+    "@commitlint/config-conventional": "19.8.1",
+    "@eslint/js": "9.36.0",
+    "@types/react": "19.1.13",
+    "@typescript-eslint/eslint-plugin": "8.44.0",
+    "@typescript-eslint/parser": "8.44.0",
+    "eslint": "9.36.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-import": "2.32.0",
+    "eslint-plugin-react": "7.37.5",
+    "eslint-plugin-react-hooks": "5.2.0",
+    "globals": "16.4.0",
+    "husky": "8.0.0",
+    "lint-staged": "16.1.6",
+    "prettier": "3.6.2",
+    "typescript": "5.9.2",
+    "typescript-eslint": "8.44.0"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
+  }
+}
