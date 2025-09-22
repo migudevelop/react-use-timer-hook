@@ -1,4 +1,5 @@
 # React Use Timer Hook
+![GitHub License](https://img.shields.io/github/license/migudevelop/react-use-timer-hook)
 
 A flexible and easy-to-use React custom hook for timer functionality, supporting countdown and count-up modes, pause/resume, and detailed time tracking. Perfect for building timers, countdowns, stopwatches, and progress indicators in your React apps.
 
@@ -114,4 +115,4 @@ const timer = useTimer({
 
 ## License
 
-MIT
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/migudevelop/react-use-timer-hook/blob/main/LICENSE) file for details.
