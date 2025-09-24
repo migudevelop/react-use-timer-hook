@@ -38,10 +38,13 @@ function TimerComponent() {
     start,
     pause,
     reset,
+    isFinished,
   } = useTimer({
     initialTime: 60, // seconds
     countUp: false,  // countdown mode
     onFinish: () => alert('Time is up!'),
+    onStart: () => console.log('Started!'),
+    onPause: () => console.log('Paused!'),
   });
 
   return (
@@ -50,7 +53,7 @@ function TimerComponent() {
       <button onClick={start}>Start</button>
       <button onClick={pause}>Pause</button>
       <button onClick={reset}>Reset</button>
-      <div>{isRunning ? 'Running' : isPaused ? 'Paused' : 'Stopped'}</div>
+  <div>{isRunning ? 'Running' : isPaused ? 'Paused' : isFinished ? 'Finished' : 'Stopped'}</div>
     </div>
   );
 }
@@ -70,6 +73,8 @@ function TimerComponent() {
 | onFinish     | function  | -       | Callback when timer finishes                     |
 | onTick       | function  | -       | Callback on every tick                           |
 | onReset      | function  | -       | Callback when timer resets                       |
+| onPause      | function  | -       | Callback when timer is paused                    |
+| onStart      | function  | -       | Callback when timer is started                   |
 
 #### Return Values
 
@@ -83,8 +88,9 @@ function TimerComponent() {
 | totalMilliseconds | number   | Total milliseconds remaining or elapsed     |
 | isRunning         | boolean  | Timer is running                            |
 | isPaused          | boolean  | Timer is paused                             |
-| pauseTime         | object   | Current pause session duration    |
-| totalPauseTime    | object   | Total pause time             |
+| isFinished        | boolean  | Timer has finished                          |
+| pauseTime         | object   | Current pause session duration |
+| totalPauseTime    | object   | Total pause time         |
 | start             | function | Start or resume the timer                   |
 | pause             | function | Pause the timer                             |
 | reset             | function | Reset the timer to initial state            |
@@ -95,6 +101,8 @@ function TimerComponent() {
 - **Count Up Mode**: Set `countUp: true`.
 - **Custom Time Display**: Use `hours`, `minutes`, `seconds`, or `totalSeconds` for progress bars.
 - **Pause Tracking**: Access `pauseTime` and `totalPauseTime` for analytics or UI.
+- **Detect Finished State**: Use `isFinished` to know when the timer has completed.
+- **Lifecycle Callbacks**: Use `onStart` and `onPause` for custom logic when timer starts or pauses.
 
 ## Example
 
