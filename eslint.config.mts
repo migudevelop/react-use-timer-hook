@@ -33,6 +33,12 @@ export default defineConfig([
     }
   },
   {
+    files: ['src/**/*.d.ts', 'src/**/*.types.ts'],
+    rules: {
+      'no-unused-vars': 'off'
+    }
+  },
+  {
     ignores: ['node_modules/*', 'dist/*'],
     rules: {
       'prefer-const': [

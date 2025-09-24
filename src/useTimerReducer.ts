@@ -33,6 +33,7 @@ function timerReducer(state: typeof INITIAL_TIMER_STATE, action: TimerAction) {
       return mergeState(state, {
         isRunning: true,
         isPaused: false,
+        isFinished: false,
         totalPauseTime: getTotalPauseMilliseconds(state),
         pauseStart: null,
         pauseTime: 0
@@ -52,6 +53,7 @@ function timerReducer(state: typeof INITIAL_TIMER_STATE, action: TimerAction) {
         }
         return mergeState(state, {
           isRunning: false,
+          isFinished: true,
           time: state.finishTime
         })
       } else {
@@ -59,7 +61,11 @@ function timerReducer(state: typeof INITIAL_TIMER_STATE, action: TimerAction) {
         if (time > 0) {
           return mergeState(state, { time })
         }
-        return mergeState(state, { isRunning: false, time: 0 })
+        return mergeState(state, {
+          isRunning: false,
+          isFinished: true,
+          time: 0
+        })
       }
     case TIMER_ACTIONS.PAUSE_TICK:
       if (state.isRunning) return state

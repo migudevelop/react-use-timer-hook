@@ -3,6 +3,25 @@ import { renderHook, act } from '@testing-library/react'
 import { useTimer } from './useTimer'
 
 describe('useTimer', () => {
+  it('calls onPause when timer is paused', () => {
+    const onPause = vi.fn()
+    const { result } = renderHook(() =>
+      useTimer({ time: 2, autoStart: true, onPause })
+    )
+    act(() => {
+      result.current.pause()
+    })
+    expect(onPause).toHaveBeenCalled()
+  })
+
+  it('calls onStart when timer is started', () => {
+    const onStart = vi.fn()
+    const { result } = renderHook(() => useTimer({ time: 2, onStart }))
+    act(() => {
+      result.current.start()
+    })
+    expect(onStart).toHaveBeenCalled()
+  })
   beforeEach(() => {
     vi.useFakeTimers()
     vi.clearAllMocks()
@@ -32,7 +51,7 @@ describe('useTimer', () => {
       vi.advanceTimersByTime(1000)
     })
     expect(result.current.time).toBe(0)
-    // Esperar a que el efecto de isRunning se actualice
+
     await Promise.resolve()
     expect(result.current.isRunning).toBe(false)
   })
@@ -92,7 +111,7 @@ describe('useTimer', () => {
       vi.advanceTimersByTime(3000)
     })
     expect(result.current.time).toBe(0)
-    // In countUp mode, finishTime is 0 by default, so timer stops immediately
+
     expect(result.current.isRunning).toBe(false)
   })
 })

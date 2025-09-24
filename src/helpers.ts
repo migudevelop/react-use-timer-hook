@@ -2,16 +2,9 @@ import { isNull } from '@migudevelop/types-utils/dist/Types/Types'
 import dayjs from 'dayjs'
 import duration from 'dayjs/plugin/duration'
 
-dayjs.extend(duration)
+import type { TimeFromMillisecondsType } from './useTimer.types'
 
-export type TimeFromMillisecondsType = {
-  totalMilliseconds: number
-  totalSeconds: number
-  milliseconds: number
-  seconds: number
-  minutes: number
-  hours: number
-}
+dayjs.extend(duration)
 
 /**
  * Converts a value in seconds to milliseconds.

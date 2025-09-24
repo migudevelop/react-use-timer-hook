@@ -1,8 +1,8 @@
 import { isNull } from '@migudevelop/types-utils'
-import { useEffect, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 
 import { getTimeFromMilliseconds, getTimeFromSeconds } from './helpers'
-import type { UseTimerOptions } from './useTimer.types'
+import type { StateReturn, UseTimerOptions } from './useTimer.types'
 import { useTimerReducer } from './useTimerReducer'
 
 const INTERVAL = 1000 // 1 second
@@ -18,12 +18,15 @@ export function useTimer({
   autoStart = false,
   onFinish,
   onTick,
-  onReset
+  onReset,
+  onPause,
+  onStart
 }: UseTimerOptions = {}) {
   const finishTime = countUp ? initialTime : 0
   const {
     isRunning,
     isPaused,
+    isFinished,
     pauseStart,
     totalPauseTime,
     pauseTime,
@@ -43,6 +46,30 @@ export function useTimer({
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const pauseIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
+  const stateToReturn: StateReturn = useMemo(
+    () => ({
+      ...getTimeFromSeconds(time),
+      isRunning,
+      isPaused,
+      isFinished,
+      time,
+      finishTime: getTimeFromSeconds(finishTime),
+      totalPauseTime: getTimeFromMilliseconds(totalPauseTime),
+      pauseTime: getTimeFromSeconds(pauseTime),
+      pauseStart
+    }),
+    [
+      time,
+      isRunning,
+      isPaused,
+      isFinished,
+      totalPauseTime,
+      pauseTime,
+      pauseStart,
+      finishTime
+    ]
+  )
+
   /**
    * Timer interval effect: handles ticking when running
    */
@@ -53,12 +80,20 @@ export function useTimer({
     }
     intervalRef.current = setInterval(() => {
       tick()
-      onTick?.()
+      onTick?.(stateToReturn)
     }, INTERVAL)
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isRunning, tick, onTick])
+
+  useEffect(() => {
+    if (isPaused) {
+      onPause?.(stateToReturn)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPaused, onPause])
 
   /**
    * Pause interval effect: tracks pause duration when paused
@@ -81,7 +116,8 @@ export function useTimer({
    */
   useEffect(() => {
     reset()
-    onReset?.()
+    onReset?.(stateToReturn)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reset, onReset])
 
   /**
@@ -90,6 +126,7 @@ export function useTimer({
   useEffect(() => {
     if (isRunning && isNull(pauseStart)) {
       start()
+      onStart?.(stateToReturn)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isRunning])
@@ -99,19 +136,15 @@ export function useTimer({
    */
   useEffect(() => {
     if (time === finishTime && !isRunning) {
-      onFinish?.()
+      onFinish?.(stateToReturn)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [time, onFinish, finishTime, isRunning])
 
   return {
-    ...getTimeFromSeconds(time),
-    isRunning,
+    ...stateToReturn,
     start,
     pause,
-    reset,
-    time,
-    totalPauseTime: getTimeFromMilliseconds(totalPauseTime),
-    pauseTime: getTimeFromSeconds(pauseTime),
-    pauseStart
+    reset
   }
 }

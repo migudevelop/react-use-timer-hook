@@ -5,6 +5,7 @@ export const INITIAL_TIMER_STATE: TimerState = {
   finishTime: 0,
   isRunning: false,
   isPaused: false,
+  isFinished: false,
   totalPauseTime: 0,
   pauseTime: 0,
   pauseStart: null,
